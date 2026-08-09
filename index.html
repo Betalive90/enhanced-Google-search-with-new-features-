@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><search>google</search></title>
+    <title>بحث Google - النسخة المطورة</title>
     <meta name="description" content="صفحة بحث جوجل">
     <meta name="keywords" content="بحث, جوجل, بحث Google">
-   <script src="https://cdn.tailwindcss.com"></script>
-   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -24,9 +25,6 @@
         }
     </script>
     <style>
-        /* ==========================================
-           CUSTOMIZATION SECTION - Edit colors here
-           ========================================== */
         :root {
             /* Primary Colors */
             --color-primary: #5D5CDE;
@@ -34,7 +32,7 @@
             --color-secondary: #764ba2;
 
             /* Background Colors */
-            --color-bg-light: #1981e9;
+            --color-bg-light: #f3f4f6;
             --color-bg-dark: #181818;
             --color-card-light: #ffffff;
             --color-card-dark: #2a2a2a;
@@ -45,26 +43,20 @@
             --color-danger: #ef4444;
             --color-info: #3b82f6;
 
-            /* Social Media Colors */
-            --color-facebook: #1877f2;
-            --color-twitter: #1da1f2;
-            --color-instagram: #e4405f;
-            --color-linkedin: #0077b5;
-            --color-youtube: #ff0000;
-            --color-github: #333333;
-
             /* Text Colors */
             --color-text-primary: #1f2937;
             --color-text-secondary: #6b7280;
             --color-text-light: #ffffff;
         }
 
-        .gradient-bg {
-            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+        body {
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        .animate-pulse-slow {
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        .gradient-text {
+            background: linear-gradient(135deg, #4285F4 0%, #EA4335 25%, #FBBC05 50%, #34A853 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .toggle-switch {
@@ -76,6 +68,10 @@
             position: relative;
             cursor: pointer;
             transition: all 0.3s;
+        }
+
+        .dark .toggle-switch {
+            background: #404040;
         }
 
         .toggle-switch:checked {
@@ -95,7 +91,7 @@
         }
 
         .toggle-switch:checked::before {
-            transform: translateX(24px);
+            transform: translateX(-24px);
         }
 
         .side-menu {
@@ -146,41 +142,10 @@
             text-transform: uppercase;
         }
 
-        .badge-new {
-            background: var(--color-success);
-            color: white;
-        }
-
-        .badge-beta {
-            background: #f59e0b;
-            color: white;
-            animation: pulse 2s infinite;
-        }
-
-        .badge-security {
-            background: var(--color-danger);
-            color: white;
-        }
-
-        .badge-feature {
-            background: var(--color-info);
-            color: white;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .animate-slide-in {
-            animation: slideIn 0.3s ease-out;
-        }
+        .badge-new { background: var(--color-success); color: white; }
+        .badge-beta { background: #f59e0b; color: white; animation: pulse 2s infinite; }
+        .badge-security { background: var(--color-danger); color: white; }
+        .badge-feature { background: var(--color-info); color: white; }
 
         .history-item {
             transition: all 0.2s;
@@ -192,14 +157,6 @@
             background: rgba(93, 92, 222, 0.1);
         }
 
-        .social-link {
-            transition: all 0.3s;
-        }
-
-        .social-link:hover {
-            transform: translateY(-3px);
-        }
-
         @media (max-width: 640px) {
             .side-menu {
                 width: 100%;
@@ -208,7 +165,255 @@
         }
     </style>
 </head>
-<body>
-    
+<body class="bg-gray-50 dark:bg-dark-bg text-gray-900 dark:text-gray-100 min-h-screen flex flex-col justify-between">
+
+    <header class="p-4 flex justify-between items-center w-full max-w-7xl mx-auto">
+        <div class="flex items-center gap-4">
+            <button onclick="toggleDarkMode()" class="p-2.5 rounded-full bg-gray-200 dark:bg-dark-card hover:opacity-90 transition-all text-xl" title="تبديل المظهر">
+                <i id="theme-icon" class="fas fa-sun text-yellow-500"></i>
+            </button>
+        </div>
+        <div class="flex items-center gap-4">
+            <button onclick="toggleMenu()" class="p-2.5 rounded-full bg-gray-200 dark:bg-dark-card hover:opacity-90 transition-all text-xl" title="الإعدادات المتقدمة">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-grow flex flex-col items-center justify-center px-4 -mt-16">
+        <div class="w-full max-w-2xl text-center space-y-8">
+            <h1 class="text-6xl sm:text-7xl font-bold tracking-tight select-none font-sans gradient-text">Google</h1>
+           
+            <form onsubmit="handleSearch(event)" class="w-full relative">
+                <div class="flex items-center bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-full hover:shadow-lg focus-within:shadow-lg transition-all px-5 py-3.5">
+                    <i class="fas fa-search text-gray-400 ml-3 text-lg"></i>
+                    <input type="text" id="search-input" placeholder="ابحث في جوجل أو اكتب عنوان URL..."
+                           class="w-full bg-transparent outline-none pr-2 text-gray-900 dark:text-white text-lg">
+                    <button type="button" onclick="generateQRFromInput()" class="mr-3 text-gray-400 hover:text-primary transition-colors" title="توليد رمز QR">
+                        <i class="fas fa-qrcode text-xl"></i>
+                    </button>
+                </div>
+
+                <div class="flex justify-center gap-3 mt-8">
+                    <button type="submit" class="px-6 py-2 bg-gray-100 dark:bg-dark-card hover:border-gray-300 dark:hover:border-dark-border border border-transparent rounded-md text-sm font-medium transition-all">
+                        بحث Google‏
+                    </button>
+                    <button type="button" onclick="luckySearch()" class="px-6 py-2 bg-gray-100 dark:bg-dark-card hover:border-gray-300 dark:hover:border-dark-border border border-transparent rounded-md text-sm font-medium transition-all">
+                        ضربة حظ
+                    </button>
+                </div>
+            </form>
+
+            <div id="qr-container" class="hidden mx-auto p-4 bg-white rounded-xl shadow-2xl max-w-xs flex flex-col items-center gap-3 animate-slide-in">
+                <h4 class="text-sm font-bold text-gray-800">رمز QR للبحث الحالي</h4>
+                <div id="qrcode"></div>
+                <button onclick="closeQR()" class="text-xs text-red-500 hover:underline">إغلاق الرمز</button>
+            </div>
+        </div>
+    </main>
+
+    <div id="overlay" class="overlay" onclick="toggleMenu()"></div>
+    <aside id="side-menu" class="side-menu p-6 flex flex-col justify-between">
+        <div class="space-y-8">
+            <div class="flex justify-between items-center border-b border-gray-100 dark:border-dark-border pb-4">
+                <h2 class="text-xl font-bold flex items-center gap-2">
+                    <i class="fas fa-cog text-primary"></i> الإعدادات والميزات
+                </h2>
+                <button onclick="toggleMenu()" class="text-gray-400 hover:text-gray-600 text-lg">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="space-y-4">
+                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider">لوحة الميزات الحية</h3>
+               
+                <div class="flex justify-between items-center p-3 bg-gray-50 dark:bg-black/20 rounded-xl">
+                    <div>
+                        <h4 class="font-bold text-sm">البحث الآمن المفرط</h4>
+                        <p class="text-xs text-gray-400">تصفية وحجب المحتوى الحساس تلقائياً</p>
+                    </div>
+                    <span class="badge badge-security">نشط</span>
+                </div>
+
+                <div class="flex justify-between items-center p-3 bg-gray-50 dark:bg-black/20 rounded-xl">
+                    <div>
+                        <h4 class="font-bold text-sm">مساعد الذكاء الاصطناعي</h4>
+                        <p class="text-xs text-gray-400">توليد إجابات مباشرة بجانب نتائج البحث</p>
+                    </div>
+                    <span class="badge badge-beta">BETA</span>
+                    <span class="badge badge-beta">chat</span>
+                </div>
+
+                <div class="flex justify-between items-center p-3 bg-gray-50 dark:bg-black/20 rounded-xl">
+                    <div>
+                        <h4 class="font-bold text-sm">البحث الصوتي الفوري</h4>
+                        <p class="text-xs text-gray-400">تحليل النبرة والتعرف على الأوامر</p>
+                    </div>
+                    <span class="badge badge-feature">جديد</span>
+                    <span class="badge badge-feature"><a href="http://www.facebook.com/miladlqas/"></a></span>
+                    <span class="badge badge-feature"><search>youtube</search></span>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider">سجل عمليات البحث الأخيرة</h3>
+                    <button onclick="clearHistory()" class="text-xs text-red-500 hover:underline">مسح الكل</button>
+                </div>
+                <div id="history-list" class="space-y-2 max-h-48 overflow-y-auto pr-1">
+                    </div>
+            </div>
+        </div>
+
+        <div class="text-center text-xs text-gray-400 border-t border-gray-100 dark:border-dark-border pt-4">
+            تطوير مخصص لبيئة بحث Google آمنة وسريعة © 2026
+        </div>
+    </aside>
+
+    <footer class="bg-gray-100 dark:bg-[#171717] text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-dark-border">
+        <div class="px-6 py-3 border-b border-gray-200 dark:border-dark-border">
+            <span> العراق </span>
+        </div>
+        <div class="px-6 py-3 flex flex-wrap justify-between gap-4">
+            <div class="flex gap-6">
+                <a href="https://about.google/" target="_blank" class="hover:underline">عن Google</a>
+                <a href="https://ads.google.com/" target="_blank" class="hover:underline">الإعلانات</a>
+                <a href="https://www.google.com/services/" target="_blank" class="hover:underline">الأعمال</a>
+                <a href="https://google.com/search/howsearchworks/" target="_blank" class="hover:underline">آلية عمل "بحث Google"</a>
+            </div>
+            <div class="flex gap-6">
+                <a href="https://policies.google.com/privacy" target="_blank" class="hover:underline">الخصوصية</a>
+                <a href="https://policies.google.com/terms" target="_blank" class="hover:underline">الشروط</a>
+                <a href="#" onclick="toggleMenu(); return false;" class="hover:underline">الإعدادات</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let searchHistory = JSON.parse(localStorage.getItem('google_history')) || ['ذكاء اصطناعي', 'رموز QR المحدثة', 'Tailwind CSS v4'];
+
+        // تبديل الوضع الليلي والنهاري
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                icon.className = "fas fa-moon text-gray-600";
+            } else {
+                html.classList.add('dark');
+                icon.className = "fas fa-sun text-yellow-500";
+            }
+        }
+
+        // فتح وإغلاق القائمة الجانبية
+        function toggleMenu() {
+            document.getElementById('side-menu').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('active');
+            renderHistory();
+        }
+
+        // معالجة وإرسال البحث الفعلي إلى جوجل
+        function handleSearch(e) {
+            if(e) e.preventDefault();
+            const input = document.getElementById('search-input').value.trim();
+            if(!input) return;
+
+            // حفظ البحث في السجل
+            if(!searchHistory.includes(input)) {
+                searchHistory.unshift(input);
+                if(searchHistory.length > 6) searchHistory.pop();
+                localStorage.setItem('google_history', JSON.stringify(searchHistory));
+            }
+
+            // توجيه المستخدم لنتائج البحث الفعلية
+            window.location.href = `https://www.google.com/search?q=${encodeURIComponent(input)}`;
+        }
+
+        function luckySearch() {
+            const input = document.getElementById('search-input').value.trim();
+            if(input) {
+                handleSearch();
+            } else {
+                window.location.href = "https://doodles.google/";
+            }
+        }
+
+        // توليد رمز QR بناءً على النص الحالي المدخل
+        let qr = null;
+        function generateQRFromInput() {
+            const input = document.getElementById('search-input').value.trim();
+            const qrContainer = document.getElementById('qr-container');
+            const qrDiv = document.getElementById('qrcode');
+           
+            if(!input) {
+                alert('الرجاء كتابة شيء في حقل البحث أولاً لتوليد الرمز!');
+                return;
+            }
+
+            qrDiv.innerHTML = "";
+            qrContainer.classList.remove('hidden');
+
+            qr = new QRCode(qrDiv, {
+                text: input,
+                width: 140,
+                height: 140,
+                colorDark : "#181818",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        }
+
+        function closeQR() {
+            document.getElementById('qr-container').classList.add('hidden');
+        }
+
+        // بناء وعرض عناصر سجل البحث
+        function renderHistory() {
+            const container = document.getElementById('history-list');
+            container.innerHTML = "";
+           
+            if(searchHistory.length === 0) {
+                container.innerHTML = `<p class="text-xs text-gray-400 text-center py-2">لا توجد عمليات بحث مؤخراً</p>`;
+                return;
+            }
+
+            searchHistory.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = "flex justify-between items-center p-2.5 bg-gray-50 dark:bg-black/10 rounded-lg history-item text-sm";
+                div.innerHTML = `
+                    <div class="flex items-center gap-2 flex-grow" onclick="selectHistory('${item}')">
+                        <i class="fas fa-history text-gray-400 text-xs"></i>
+                        <span class="truncate max-w-[280px]">${item}</span>
+                    </div>
+                    <button onclick="deleteHistoryItem(event, ${index})" class="text-gray-400 hover:text-red-500 p-1">
+                        <i class="fas fa-times text-xs"></i>
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function selectHistory(val) {
+            document.getElementById('search-input').value = val;
+            toggleMenu();
+            handleSearch();
+        }
+
+        function deleteHistoryItem(e, index) {
+            e.stopPropagation();
+            searchHistory.splice(index, 1);
+            localStorage.setItem('google_history', JSON.stringify(searchHistory));
+            renderHistory();
+        }
+
+        function clearHistory() {
+            searchHistory = [];
+            localStorage.removeItem('google_history');
+            renderHistory();
+        }
+
+        // إعداد العرض المبدئي للسجل
+        renderHistory();
+    </script>
 </body>
 </html>
