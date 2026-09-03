@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#5D5CDE" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Betalive" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <title>Betalive Search AI Beta — محرك البحث الذكي</title>
+    <meta name="description" content="Betalive Search AI Beta — محرك بحث ذكي يجمع بين البحث الفوري وتحليل الذكاء الاصطناعي" />
+    <meta name="keywords" content="Betalive, بحث ذكي, AI Search, بحث بالذكاء الاصطناعي" />
+    <link rel="manifest" href__="/manifest.json" />
+    <link rel="icon" type="image/svg+xml" href__="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔍</text></svg>" />
+    <link rel="apple-touch-icon" href__="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%235D5CDE'/><text x='96' y='130' font-size='100' text-anchor='middle'>🔍</text></svg>" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+
+
+
